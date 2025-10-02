@@ -15,6 +15,8 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['posts'] = Post.objects.all().order_by('-created_at')[:3]
         context['products'] = Product.objects.all().order_by('-created_at')[:5]
+        context['best_selling_products'] = Product.objects.filter(is_best_selling=True)[:5]
+        context['you_may_also_like_products'] = Product.objects.filter(is_you_may_also_like=True)[:5]
         return context
 
 class ContactView(TemplateView):
