@@ -5,3 +5,4 @@
 - Cơ sở dữ liệu:
   + username: quochuy
   + password: 123456
+- Nếu có tính năng không hoạt động, hay giao diện hiển thị lỗi hãy thử xóa dữ liệu duyệt web và chạy lại server
