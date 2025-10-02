@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Kaira{% endblock %}
+
+{% block content %}
+<section class="post-detail-page py-5">
+    <div class="container">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-meta">Published on: {{ post.created_at|date:"F d, Y" }}</p>
+
+        {% if post.image %}
+            <div class="post-image-container">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
+            </div>
+        {% endif %}
+
+        <div class="post-content mt-4">
+            {{ post.content|linebreaks }}
+        </div>
+
+        <div class="mt-5">
+            <a href="{% url 'index' %}" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

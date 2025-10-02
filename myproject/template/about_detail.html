@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="about-detail-section" style="padding: 60px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 style="font-size: 3rem; font-weight: 300; text-align: center; margin-bottom: 40px;">{{ about_detail.title }}</h1>
+                <img src="{{ about_detail.image.url }}" alt="{{ about_detail.title }}" style="width: 100%; height: auto; margin-bottom: 40px; border-radius: 5px;">
+                <div style="font-size: 1.1rem; line-height: 1.8;">
+                    {{ about_detail.content|linebreaks }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

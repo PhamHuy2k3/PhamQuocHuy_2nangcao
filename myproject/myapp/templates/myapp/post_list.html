@@ -1,0 +1,25 @@
+{% extends 'form/BaseAdmin.html' %}
+
+{% block content %}
+    <h1>Posts</h1>
+    <a href="{% url 'post_create_admin' %}" class="btn btn-primary mb-3">Create Post</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in object_list %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>
+                        <a href="{% url 'post_update_admin' post.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'post_delete_admin' post.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

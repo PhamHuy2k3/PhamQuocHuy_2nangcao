@@ -1,0 +1,27 @@
+{% extends 'form/BaseAdmin.html' %}
+
+{% block content %}
+    <h1>Users</h1>
+    <a href="{% url 'user_create_admin' %}" class="btn btn-primary mb-3">Create User</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in object_list %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <a href="{% url 'user_update_admin' user.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'user_delete_admin' user.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

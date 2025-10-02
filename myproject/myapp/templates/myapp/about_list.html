@@ -1,0 +1,25 @@
+{% extends 'form/BaseAdmin.html' %}
+
+{% block content %}
+    <h1>About Sections</h1>
+    <a href="{% url 'about_create_admin' %}" class="btn btn-primary mb-3">Create About Section</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for about in object_list %}
+                <tr>
+                    <td>{{ about.title }}</td>
+                    <td>
+                        <a href="{% url 'about_update_admin' about.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'about_delete_admin' about.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

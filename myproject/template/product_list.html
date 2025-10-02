@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }} - Kaira
+    {% else %}
+        All Products - Kaira
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2">
+                <div class="sidebar">
+                    <div class="widget">
+                        <h5 class="widget-title">Categories</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'product_list' %}">All</a></li>
+                            {% for cat in categories %}
+                                <li><a href="{% url 'product_list_by_category' cat.slug %}">{{ cat.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="col-lg-10">
+                <h1 class="section-title text-center mb-5">
+                    {% if category %}
+                        {{ category.name }}
+                    {% else %}
+                        Featured Products
+                    {% endif %}
+                </h1>
+
+                <!-- Carousel -->
+                <div class="swiper product-swiper mb-5">
+                    <div class="swiper-wrapper">
+                        {% for product in featured_products %}
+                        <div class="swiper-slide">
+                            <div class="product-item image-zoom-effect link-effect">
+                                <div class="image-holder position-relative">
+                                    <a href="{% url 'product_detail' pk=product.pk %}">
+                                        {% if product.image %}
+                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid">
+                                        {% else %}
+                                            <img src="{% static 'images/default-product-image.jpg' %}" alt="Default Product Image" class="product-image img-fluid">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <h5 class="element-title text-uppercase fs-5 mt-3">
+                                        <a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a>
+                                    </h5>
+                                    <a href="#" class="text-decoration-none" data-after="Add to cart"><span>${{ product.price }}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <h1 class="section-title text-center mb-5">
+                    {% if category %}
+                        {{ category.name }} Products
+                    {% else %}
+                        All Products
+                    {% endif %}
+                </h1>
+
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="product-item image-zoom-effect link-effect">
+                            <div class="image-holder position-relative">
+                                <a href="{% url 'product_detail' pk=product.pk %}">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid">
+                                    {% else %}
+                                        <img src="{% static 'images/default-product-image.jpg' %}" alt="Default Product Image" class="product-image img-fluid">
+                                    {% endif %}
+                                </a>
+                                <a href="#" class="btn-icon btn-wishlist">
+                                    <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <use xlink:href="#heart"></use>
+                                    </svg>
+                                </a>
+                                <div class="product-content">
+                                    <h5 class="element-title text-uppercase fs-5 mt-3">
+                                        <a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a>
+                                    </h5>
+                                    <a href="#" class="text-decoration-none" data-after="Add to cart"><span>${{ product.price }}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <p>No products available in this category.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_body_scripts %}
+<script>
+  var swiper = new Swiper('.product-swiper', {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      // when window width is >= 320px
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 10
+      },
+      // when window width is >= 768px
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      // when window width is >= 992px
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      }
+    }
+  });
+</script>
+{% endblock %}
