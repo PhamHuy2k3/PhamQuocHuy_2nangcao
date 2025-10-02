@@ -17,31 +17,36 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from myapp import views
+from myapp.views import (
+    IndexView, ContactView, PostDetailView, ProductDetailView, PostListView,
+    ProductListView, ProductListByCategoryView, AboutView, AboutDetailView,
+    AddToCartView, AddToWishlistView, RemoveFromWishlistView, ViewWishlistView,
+    RemoveFromCartView, ViewCartView, ProfileView
+)
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('profile/', views.profile, name='profile'),
+    path('profile/', ProfileView.as_view(), name='profile'),
     path("admin-dashboard/", include('myapp.urls')),
-    path("", views.index, name="index"),
-    path("contact/", views.contact, name="contact"),
-    path("about/", views.about, name="about"),
-    path('about/<slug:slug>/', views.about_detail, name='about_detail'),
-    path("post/<int:pk>/", views.post_detail, name="post_detail"),
-    path("product/<int:pk>/", views.product_detail, name="product_detail"),
-    path("blog/", views.post_list, name="post_list"),
-    path("products/<slug:category_slug>/", views.product_list_by_category, name="product_list_by_category"),
-    path("products/", views.product_list, name="product_list"),
+    path("", IndexView.as_view(), name="index"),
+    path("contact/", ContactView.as_view(), name="contact"),
+    path("about/", AboutView.as_view(), name="about"),
+    path('about/<slug:slug>/', AboutDetailView.as_view(), name='about_detail'),
+    path("post/<int:pk>/", PostDetailView.as_view(), name="post_detail"),
+    path("product/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),
+    path("blog/", PostListView.as_view(), name="post_list"),
+    path("products/<slug:category_slug>/", ProductListByCategoryView.as_view(), name="product_list_by_category"),
+    path("products/", ProductListView.as_view(), name="product_list"),
 
     # Cart and Wishlist URLs
-    path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
-    path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
-    path('cart/', views.view_cart, name='view_cart'),
-    path('wishlist/add/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
-    path('wishlist/remove/<int:product_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
-    path('wishlist/', views.view_wishlist, name='view_wishlist'),
+    path('cart/add/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart'),
+    path('cart/remove/<int:product_id>/', RemoveFromCartView.as_view(), name='remove_from_cart'),
+    path('cart/', ViewCartView.as_view(), name='view_cart'),
+    path('wishlist/add/<int:product_id>/', AddToWishlistView.as_view(), name='add_to_wishlist'),
+    path('wishlist/remove/<int:product_id>/', RemoveFromWishlistView.as_view(), name='remove_from_wishlist'),
+    path('wishlist/', ViewWishlistView.as_view(), name='view_wishlist'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
