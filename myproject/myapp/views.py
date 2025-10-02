@@ -180,8 +180,6 @@ class AboutDetailDeleteView(DeleteView):
     model = AboutDetail
     template_name = 'myapp/about_confirm_delete.html'
     success_url = reverse_lazy('about_list_admin')
-
-# User Admin
 class UserListView(ListView):
     model = User
     template_name = 'myapp/user_list.html'
